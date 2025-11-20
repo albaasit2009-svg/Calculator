@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Calculator</title>
+<style>
+  body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Helvetica', sans-serif;
+    margin: 0;
+  }
+
+  /* Desktop styles */
+  .calc {
+    width: 320px;
+    background: #222;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  }
+
+  #display {
+    width: 100%;
+    min-height: 60px;
+    max-height: 120px;
+    background: #000;
+    color: #fff;
+    font-size: 28px;
+    text-align: right;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    word-break: break-word;
+  }
+
+  .btns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  button {
+    padding: 18px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .num {
+    background: #333;
+    color: #fff;
+  }
+
+  .op {
+    background: orange;
+    color: #fff;
+  }
+
+  .special {
+    background: #555;
+    color: #fff;
+  }
+
+  button:hover {
+    filter: brightness(120%);
+  }
+
+  button:active {
+    filter: brightness(90%);
+  }
+
+  /* Faqat telefon uchun */
+  @media (max-width: 480px) {
+    .calc {
+      width: 90%;       /* ekran kengligiga moslashadi */
+      max-width: 375px; /* Apple iPhone kattaligi approx */
+      background: #222;
+      border-radius: 30px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    }
+
+    #display {
+      width: 100%;
+      min-height: 70px;
+      background: #000;
+      color: #fff;
+      font-size: 36px;  /* Apple Calculator fontiga yaqin */
+      text-align: right;
+      padding: 12px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .btns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      padding: 22px;
+      font-size: 6vw;   /* ekran kengligiga mos */
+      border-radius: 15px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .num { background: #333; color: #fff; }
+    .op { background: orange; color: #fff; }
+    .special { background: #555; color: #fff; }
+
+    button:hover { filter: brightness(120%); }
+    button:active { filter: brightness(90%); }
+  }
+</style>
+</head>
+<body>
+
+<div class="calc">
+  <div id="display">0</div>
+  <div class="btns">
+    <button class="special" onclick="clearDisplay()">C</button>
+    <button class="special" onclick="addToDisplay('/')">÷</button>
+    <button class="special" onclick="addToDisplay('*')">×</button>
+    <button class="special" onclick="backspace()">⌫</button>
+
+    <button class="num" onclick="addToDisplay('7')">7</button>
+    <button class="num" onclick="addToDisplay('8')">8</button>
+    <button class="num" onclick="addToDisplay('9')">9</button>
+    <button class="op" onclick="addToDisplay('-')">−</button>
+
+    <button class="num" onclick="addToDisplay('4')">4</button>
+    <button class="num" onclick="addToDisplay('5')">5</button>
+    <button class="num" onclick="addToDisplay('6')">6</button>
+    <button class="op" onclick="addToDisplay('+')">+</button>
+
+    <button class="num" onclick="addToDisplay('1')">1</button>
+    <button class="num" onclick="addToDisplay('2')">2</button>
+    <button class="num" onclick="addToDisplay('3')">3</button>
+    <button class="op" onclick="calculate()">=</button>
+
+    <button class="num" onclick="addToDisplay('0')" style="grid-column: span 2;">0</button>
+    <button class="num" onclick="addToDisplay('.')">.</button>
+  </div>
+</div>
+
+<script>
+const display = document.getElementById("display");
+
+function addToDisplay(val) {
+  // Responsive font size
+  const isMobile = window.innerWidth <= 480;
+  display.style.fontSize = isMobile ? "36px" : "28px";
+  
+  if(display.innerText === "0") display.innerText = val;
+  else display.innerText += val;
+}
+
+function clearDisplay() {
+  const isMobile = window.innerWidth <= 480;
+  display.innerText = "0";
+  display.style.fontSize = isMobile ? "36px" : "28px";
+}
+
+function backspace() {
+  const isMobile = window.innerWidth <= 480;
+  display.style.fontSize = isMobile ? "36px" : "28px";
+  let text = display.innerText;
+  display.innerText = text.length <= 1 ? "0" : text.slice(0,-1);
+}
+
+function calculate() {
+  const funnyResponses = [
+    "Hmm… bu men uchun qiyin ",
+    "Ey, sen o'zing hisoblab ko'r",
+    "Bilmayman",
+    "Ish emas bu ",
+    "Shoshma, charchadim"
+  ];
+  const random = funnyResponses[Math.floor(Math.random() * funnyResponses.length)];
+  
+  const isMobile = window.innerWidth <= 480;
+  display.style.fontSize = random.length > 20 ? (isMobile ? "28px" : "18px") : (isMobile ? "36px" : "28px");
+  display.innerText = random;
+}
+</script>
+
+</body>
+</html>
